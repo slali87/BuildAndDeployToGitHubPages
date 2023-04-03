@@ -18,23 +18,15 @@ jobs:
         run: |
           cat staticFile > indexTmp.html
           cat indexTmp.html
-          pwd
-          ls -la
-          git status
       - name: Deploy
-        #if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         run: |
           git config user.email "githubaction@users.noreply.github.com"
           git config user.name "GitHub Action"
           git fetch
           git checkout gh-pages
-          pwd
-          ls -la
-          git status
           rm -rf index.html
           mv indexTmp.html index.html
           git add index.html
           git commit --amend -m "Deploy from ${{ github.sha }}"
-          echo beforePush
-          git status
-          git push --force origin gh-pages
+          git push --force
