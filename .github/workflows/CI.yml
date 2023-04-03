@@ -9,6 +9,8 @@ jobs:
         shell: bash
     strategy:
       fail-fast: false
+    permissions:
+      contents: write  # To push a branch
     steps:
       - name: Checkout
         uses: actions/checkout@v3
