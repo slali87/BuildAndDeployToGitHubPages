@@ -33,4 +33,6 @@ jobs:
           mv indexTmp.html index.html
           git add index.html
           git commit --amend -m "Deploy from ${{ github.sha }}"
-          git push --force
+          echo beforePush
+          git status
+          git push --force origin gh-pages
