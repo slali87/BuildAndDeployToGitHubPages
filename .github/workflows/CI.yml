@@ -17,7 +17,7 @@ jobs:
           cat staticFile > indexTmp.html
           cat indexTmp.html
       - name: Deploy
-        if: github.ref == 'refs/heads/main'
+        #if: github.ref == 'refs/heads/main'
         run: |
           git checkout gh-pages
           rm -rf index.html
