@@ -16,11 +16,17 @@ jobs:
         run: |
           cat staticFile > indexTmp.html
           cat indexTmp.html
+          pwd
+          ls -la
+          git status
       - name: Deploy
         #if: github.ref == 'refs/heads/main'
         run: |
           git fetch
           git checkout gh-pages
+          pwd
+          ls -la
+          git status
           rm -rf index.html
           mv indexTemp.html index.html
           git add index.html
