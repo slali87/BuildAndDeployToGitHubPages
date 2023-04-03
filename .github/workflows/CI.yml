@@ -28,7 +28,7 @@ jobs:
           ls -la
           git status
           rm -rf index.html
-          mv indexTemp.html index.html
+          mv indexTmp.html index.html
           git add index.html
           git commit --amend -m "Deploy from ${{ github.sha }}"
           git push --force
