@@ -19,6 +19,7 @@ jobs:
       - name: Deploy
         #if: github.ref == 'refs/heads/main'
         run: |
+          git fetch
           git checkout gh-pages
           rm -rf index.html
           mv indexTemp.html index.html
