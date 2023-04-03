@@ -19,7 +19,7 @@ jobs:
           cat staticFile > indexTmp.html
           cat indexTmp.html
       - name: Deploy
-        if: github.ref == 'refs/heads/main'
+        #if: github.ref == 'refs/heads/main'
         run: |
           git config user.email "githubaction@users.noreply.github.com"
           git config user.name "GitHub Action"
