@@ -24,7 +24,7 @@ jobs:
           retention-days: 1
   Deploy:
     name: Deploy
-    if: success() #&& github.ref == 'refs/heads/main'   # Deploy only from main
+    if: success() && github.ref == 'refs/heads/main'   # Deploy only from main
     needs: [Build]
     runs-on: ubuntu-latest
     defaults:
@@ -39,17 +39,11 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: gh-pages
-      - name: List
-        run: |
-          ls -la
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
           name: indexTmp
           path: .
-      - name: List After
-        run: |
-          ls -la
       - name: Upload
         run: |
           git config user.email "githubaction@users.noreply.github.com"
