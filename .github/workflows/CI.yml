@@ -37,6 +37,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: gh-pages
       - name: List
         run: |
           ls -la
@@ -52,8 +54,6 @@ jobs:
         run: |
           git config user.email "githubaction@users.noreply.github.com"
           git config user.name "GitHub Action"
-          git fetch   # Fetch branches
-          git checkout gh-pages
           rm -rf index.html
           mv indexTmp.html index.html
           git add index.html
