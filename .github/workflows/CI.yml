@@ -1,8 +1,8 @@
 name: CI
 on: [push, pull_request]
 jobs:
-  Verification:
-    name: Linux
+  Build:
+    name: Build
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Build
+      - name: Create
         run: |
           cat staticFile > indexTmp.html
           cat indexTmp.html
@@ -21,3 +21,43 @@ jobs:
         with:
           name: indexTmp
           path: indexTmp.html
+          retention-days: 1
+jobs:
+  Deploy:
+    name: Deploy
+    if: ${{ success() }} && github.ref == 'refs/heads/main'   # Deploy only from mai
+    needs: [Build]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+    permissions:
+      contents: write  # Add to push to a branch
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: List
+        run: |
+          ls -la
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: indexTmp
+          path: .
+      - name: List After
+        run: |
+          ls -la
+      - name: Upload
+        run: |
+          git config user.email "githubaction@users.noreply.github.com"
+          git config user.name "GitHub Action"
+          git fetch   # Fetch branches
+          git checkout gh-pages
+          rm -rf index.html
+          mv indexTmp.html index.html
+          git add index.html
+          git commit --amend -m "Deploy from ${{ github.sha }}" # Overwrite since the history is not needed for generated files
+          git push --force
+
