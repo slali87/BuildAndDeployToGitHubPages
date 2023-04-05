@@ -22,7 +22,6 @@ jobs:
           name: indexTmp
           path: indexTmp.html
           retention-days: 1
-jobs:
   Deploy:
     name: Deploy
     if: ${{ success() }} && github.ref == 'refs/heads/main'   # Deploy only from mai
