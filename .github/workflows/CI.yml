@@ -9,8 +9,6 @@ jobs:
         shell: bash
     strategy:
       fail-fast: false
-    permissions:
-      contents: write  # Add to push to a branch
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -18,15 +16,8 @@ jobs:
         run: |
           cat staticFile > indexTmp.html
           cat indexTmp.html
-      - name: Deploy
-        if: github.ref == 'refs/heads/main'   # Deploy only from main
-        run: |
-          git config user.email "githubaction@users.noreply.github.com"
-          git config user.name "GitHub Action"
-          git fetch   # Fetch branches
-          git checkout gh-pages
-          rm -rf index.html
-          mv indexTmp.html index.html
-          git add index.html
-          git commit --amend -m "Deploy from ${{ github.sha }}" # Overwrite since the history is not needed for generated files
-          git push --force
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: indexTmp
+          path: indexTmp.html
