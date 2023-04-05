@@ -24,7 +24,7 @@ jobs:
           retention-days: 1
   Deploy:
     name: Deploy
-    if: ${{ success() }} && github.ref == 'refs/heads/main'   # Deploy only from mai
+    if: success() && github.ref == 'refs/heads/main'   # Deploy only from main
     needs: [Build]
     runs-on: ubuntu-latest
     defaults:
